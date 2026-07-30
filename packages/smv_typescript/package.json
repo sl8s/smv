@@ -1,0 +1,46 @@
+{
+  "name": "smv_typescript",
+  "version": "2.0.0",
+  "type": "module",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/types/index.d.ts",
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "scripts": {
+    "download": "npm install",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build:types": "tsc -p tsconfig.types.json",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:types",
+    "test": "npx vitest run",
+    "drypack": "npm pack --dry-run",
+    "pack": "npm pack"
+  },
+  "dependencies": {
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vitest": "^4.1.8"
+  },
+  "files": [
+    "dist/",
+	"src/",
+    "tests/",
+    ".gitignore",
+    "tsconfig.base.json",
+    "tsconfig.cjs.json",
+    "tsconfig.esm.json",
+    "tsconfig.types.json"
+  ]
+}

@@ -1,3 +1,8 @@
+
+- Coming soon version 2.0.0
+
+---
+
 ## Install
 
 - [JavaScript/TypeScript](#javascripttypescript)

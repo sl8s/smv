@@ -11,9 +11,11 @@ export declare abstract class BaseArrayModel<T extends BaseModel> {
     updateFromArrayById(newArrayModel: Array<T>): void;
     deleteFromArrayById(arrayId: Array<string>): void;
 }
-export declare abstract class BaseModelRepository implements IDispose {
+export declare abstract class BaseModelRepository<Y extends BaseModel, U extends BaseArrayModel<Y>> implements IDispose {
     protected constructor();
     abstract dispose(): void;
+    protected abstract fromMap(map: Record<string, any>): Y;
+    protected abstract fromArrayMap(arrayMap: Array<Record<string, any>>): U;
     protected getSafeValue<T>(map: Map<string, any> | Record<string, any>, key: string, defaultValue: T): T;
 }
 export declare abstract class BaseModel {

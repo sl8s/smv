@@ -58,11 +58,15 @@ export abstract class BaseArrayModel<T extends BaseModel> {
     }
 }
 
-export abstract class BaseModelRepository implements IDispose {
+export abstract class BaseModelRepository<Y extends BaseModel, U extends BaseArrayModel<Y>> implements IDispose {
     protected constructor() {
     }
     
     public abstract dispose(): void;
+	
+	protected abstract fromMap(map: Record<string,any>): Y;
+	
+	protected abstract fromArrayMap(arrayMap: Array<Record<string,any>>): U;
 
     protected getSafeValue<T>(map: Map<string,any> | Record<string,any>, key: string, defaultValue: T): T {
         if (map instanceof Map) {

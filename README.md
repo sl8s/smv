@@ -8,7 +8,7 @@
 - package.json
 
 ```json
-"smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.0/smv_typescript_v2_0_0.tgz"
+"smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.1/smv_typescript_v2_0_1.tgz"
 ```
 
 ### Dart
@@ -19,7 +19,7 @@
 smv_dart:
   git:
     url: https://github.com/sl8s/smv.git
-    ref: v2.0.0
+    ref: v2.0.1
     path: packages/smv_dart
 ```
 

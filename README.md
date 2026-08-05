@@ -8,7 +8,7 @@
 - package.json
 
 ```json
-"smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.1/smv_typescript_v2_0_1.tgz"
+"smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.2/smv_typescript_v2_0_2.tgz"
 ```
 
 ### Dart

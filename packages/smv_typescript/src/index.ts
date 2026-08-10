@@ -416,12 +416,12 @@ export class ResultArrayModel<T extends BaseModel, Y extends BaseArrayModel<T>> 
         this.exceptionAdapter = exceptionAdapter;
     }
 
-    public static success<T extends BaseModel, Y extends BaseArrayModel<T>>(data: Y): ResultArrayModel<T,Y> {
-        return new ResultArrayModel<T,Y>(data, new ExceptionAdapter(null));
+    public static success<U extends BaseModel, I extends BaseArrayModel<U>>(data: I): ResultArrayModel<U,I> {
+        return new ResultArrayModel<U,I>(data, new ExceptionAdapter(null));
     }
 
-    public static exception<T extends BaseModel, Y extends BaseArrayModel<T>>(exception: BaseException): ResultArrayModel<T,Y> {
-        return new ResultArrayModel<T,Y>(null, new ExceptionAdapter(exception));
+    public static exception<U extends BaseModel, I extends BaseArrayModel<U>>(exception: BaseException): ResultArrayModel<U,I> {
+        return new ResultArrayModel<U,I>(null, new ExceptionAdapter(exception));
     }
 }
 

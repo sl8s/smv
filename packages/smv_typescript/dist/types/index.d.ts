@@ -101,8 +101,8 @@ export declare class ResultArrayModel<T extends BaseModel, Y extends BaseArrayMo
     readonly data: Y | null;
     readonly exceptionAdapter: ExceptionAdapter;
     private constructor();
-    static success<T extends BaseModel, Y extends BaseArrayModel<T>>(data: Y): ResultArrayModel<T, Y>;
-    static exception<T extends BaseModel, Y extends BaseArrayModel<T>>(exception: BaseException): ResultArrayModel<T, Y>;
+    static success<U extends BaseModel, I extends BaseArrayModel<U>>(data: I): ResultArrayModel<U, I>;
+    static exception<U extends BaseModel, I extends BaseArrayModel<U>>(exception: BaseException): ResultArrayModel<U, I>;
 }
 export declare class ResultModel<T extends BaseModel> {
     readonly data: T | null;

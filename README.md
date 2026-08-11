@@ -39,18 +39,21 @@ smv_dart:
 ![Specific SMV](./specific_smv.png)
 - Share:
 - - IterationService - generates unique strings and stores them to prevent duplication.
-- - ShareService - stores data and listeners using a key-value data structure (Map)
+- - ShareService - stores data and listeners using a key-value data structure (Map).
 - - ShareProxy - stores data and listeners using a key-value structure (Map) and generates a unique string to register listeners based on specific data (e.g., `tokenGoogleUser` (key) -> `listenerId` (key)). This is done to prevent a memory leak when removing a listener via a unique string. Without the unique string, all listeners would be removed. (e.g., `tokenGoogleUser` (key)).
 - Model:
-- - BaseModel - manages data
-- - BaseArrayModel - manages data arrays
-- - IDispose - releases database or network connectors from memory.
+- - BaseModel - manages data.
+- - BaseArrayModel - manages data arrays.
+- - IDispose - freeing up resources in RAM to prevent memory leaks.
 - - BaseModelRepository - provides data.
 - View - manages the user interface and displays data to the user.
 
-#### Example
+#### Design Patterns
 
-- ModelRepository (Courier) accesses the network or the database, retrieves the Model (Product), and passes the Model (Product) to the View (User). The View (User) interacts with the Model (Product), and the Model (Product) can change its characteristics.
-- View (User) creates a Model (Product) and hands it to the ModelRepository (Courier) to deliver it to the network or database.
-
-Conclusion: If you remove the ModelRepository (Courier), then the task of transferring the Model (Product) to the user and to the database or network would fall to the product itself—which is highly illogical.
+- IterationService - Singleton.
+- ShareService - Singleton, Pub/Sub.
+- ShareProxy - Pub/Sub, Proxy.
+- BaseModel - Prototype.
+- BaseArrayModel - Prototype.
+- IDispose - Dispose.
+- BaseModelRepository - Repository, Dispose.

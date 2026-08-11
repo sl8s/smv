@@ -1,3 +1,7 @@
+![SMV](./smv.png)
+
+---
+
 ## Install
 
 - [JavaScript/TypeScript](#javascripttypescript)
@@ -5,15 +9,11 @@
 
 ### JavaScript/TypeScript
 
-- package.json
-
 ```json
 "smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.3/smv_typescript_v2_0_3.tgz"
 ```
 
 ### Dart
-
-- pubspec.yaml
 
 ```yaml
 smv_dart:
@@ -23,37 +23,19 @@ smv_dart:
     path: packages/smv_dart
 ```
 
-## SMV
+## Design Patterns
 
-- SMV (Share, Model, View) - two-layer architectural design pattern. Built based on the three-layer architectural design pattern [library_architecture_mvvm_modify](https://github.com/antonpichka/library_architecture_mvvm_modify). The reason for creating the two-layer architectural design pattern is the high cognitive load associated with the three-layer architectural design pattern. The explanation is provided in the article [Comparison of architectural design patterns](./comparison_of_architectural_design_patterns.pdf) available only in Russian, as my English proficiency is insufficient.
-
-### Abstract Explanation
-
-![SMV](./smv.png)
-- Share - exchanges temporary data between views (The data persists only for the lifetime of the application.).
-- Model - manages data and provides data.
-- View - manages the user interface and displays data to the user.
-
-### Specific Explanation
-
-![Specific SMV](./specific_smv.png)
-- Share:
-- - IterationService - generates unique strings and stores them to prevent duplication.
-- - ShareService - stores data and listeners using a key-value data structure (Map).
-- - ShareProxy - stores data and listeners using a key-value structure (Map) and generates a unique string to register listeners based on specific data (e.g., `tokenGoogleUser` (key) -> `listenerId` (key)). This is done to prevent a memory leak when removing a listener via a unique string. Without the unique string, all listeners would be removed. (e.g., `tokenGoogleUser` (key)).
-- Model:
-- - BaseModel - manages data.
-- - BaseArrayModel - manages data arrays.
-- - IDispose - freeing up resources in RAM to prevent memory leaks.
-- - BaseModelRepository - provides data.
-- View - manages the user interface and displays data to the user.
-
-#### Design Patterns
-
-- IterationService - Singleton.
-- ShareService - Singleton, Pub/Sub.
-- ShareProxy - Pub/Sub, Proxy.
-- BaseModel - Prototype.
-- BaseArrayModel - Prototype.
-- IDispose - Dispose.
-- BaseModelRepository - Repository, Dispose.
+- Class `BaseModel` - `Prototype`.
+- Class `BaseArrayModel` or `BaseListModel` - `Prototype`.
+- Class `BaseModelRepository` - `Repository`, `Dispose`.
+- Class `IterationService` - `Singleton`.
+- Class `ShareService` - `Singleton`, `Pub/Sub`.
+- Class `ShareProxy` - `Pub/Sub`, `Proxy`.
+- Class `BaseException` - `Abstract Factory`.
+- Class `LocalException` - `Abstract Factory`.
+- Class `NetworkException` - `Abstract Factory`.
+- Class `ExceptionAdapter` - Resembling an `Adapter`.
+- Class `IDispose` - `Dispose`.
+- Class `Result` - `Result/Either`.
+- Class `ResultModel` - `Result/Either`.
+- Class `ResultArrayModel` or `ResultListModel` - `Result/Either`.

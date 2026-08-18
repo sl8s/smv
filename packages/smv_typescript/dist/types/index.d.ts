@@ -3,7 +3,6 @@ export declare abstract class BaseArrayModel<T extends BaseModel> {
     protected constructor(arrayModel: Array<T>);
     abstract clone(): BaseArrayModel<T>;
     abstract toArrayMap(): Array<Record<string, any>>;
-    abstract toString(): string;
     add(newModel: T): void;
     updateById(newModel: T): void;
     deleteById(id: string): void;
@@ -23,7 +22,6 @@ export declare abstract class BaseModel {
     protected constructor(id: string);
     abstract clone(): BaseModel;
     abstract toMap(): Record<string, any>;
-    abstract toString(): string;
 }
 export declare class IterationService {
     static readonly instance: IterationService;
@@ -62,13 +60,11 @@ export declare class ShareService {
     deleteListenerByListenerId(key: string, listenerId: string): void;
     deleteListenersByListenerId(arrayKey: Array<string>, listenerId: string): void;
 }
-export declare abstract class BaseException extends Error {
+export declare abstract class BaseException {
     private readonly source;
-    private readonly type;
-    protected constructor(source: string, type: string);
+    protected constructor(source: string);
     abstract toString(): string;
-    protected initException(): void;
-    private debugPrintException;
+    protected initToConstructor(): void;
 }
 export declare enum EnumGuilty {
     developer = "developer",
@@ -85,8 +81,8 @@ export interface IDispose {
 }
 export declare class LocalException extends BaseException {
     readonly guilty: EnumGuilty;
-    readonly extraMessage: string;
-    constructor(source: string, guilty: EnumGuilty, extraMessage: string);
+    readonly message: string;
+    constructor(source: string, guilty: EnumGuilty, message: string);
     toString(): string;
 }
 export declare class NetworkException extends BaseException {
@@ -117,7 +113,5 @@ export declare class Result {
     static success(): Result;
     static exception(exception: BaseException): Result;
 }
-export declare function debugPrint(text: string): void;
-export declare function debugPrintException(text: string): void;
-export declare function debugPrintMethod(methodName: string): void;
+export declare function redPrint(text: string): void;
 //# sourceMappingURL=index.d.ts.map

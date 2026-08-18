@@ -11,8 +11,6 @@ export abstract class BaseArrayModel<T extends BaseModel> {
 
     public abstract toArrayMap(): Array<Record<string,any>>;
 
-    public abstract toString(): string;
-
     public add(newModel: T): void {
         this.arrayModel.push(newModel);
     }
@@ -86,8 +84,6 @@ export abstract class BaseModel {
     public abstract clone(): BaseModel;
 
     public abstract toMap(): Record<string,any>;
-
-    public abstract toString(): string;
 }
 
 export class IterationService {
@@ -242,30 +238,20 @@ export class ShareService {
     }
 }
 
-export abstract class BaseException extends Error {
+export abstract class BaseException {
     private readonly source: string;
-    private readonly type: string;
 
-    protected constructor(source: string, type: string) {
-        super();
+    protected constructor(source: string) {
         this.source = source;
-        this.type = type;
-        this.name = this.constructor.name;
     }
 
     public abstract toString(): string;
        
-    protected initException(): void {
-        this.message = this.toString();
-        this.debugPrintException();
-    }
-
-    private debugPrintException(): void {
-        debugPrintException("\n===start_to_trace_exception===\n");
-        debugPrintException("Source: " + this.source);
-        debugPrintException("Type: " + this.type);
-        debugPrintException("toString(): " + this.toString());
-        debugPrintException("\n===end_to_trace_exception===\n");
+    protected initToConstructor(): void {
+        redPrint("\n");
+        redPrint("Source: " + this.source);
+        redPrint("toString(): " + this.toString());
+        redPrint("\n");
     }
 }
 
@@ -293,18 +279,18 @@ export interface IDispose {
 
 export class LocalException extends BaseException {
     public readonly guilty: EnumGuilty;
-    public readonly extraMessage: string;
+    public readonly message: string;
     
-    public constructor(source: string, guilty: EnumGuilty, extraMessage: string) {
-        super(source,"LocalException");
+    public constructor(source: string, guilty: EnumGuilty, message: string) {
+        super(source);
         this.guilty = guilty;
-        this.extraMessage = extraMessage;
-        this.initException();
+        this.message = message;
+        this.initToConstructor();
     }
 
     public override toString(): string {
         return "LocalException(guilty: " + this.guilty + ", " + 
-            "extraMessage: " + this.extraMessage + ")";
+            "message: " + this.message + ")";
     }
 }
 
@@ -314,11 +300,11 @@ export class NetworkException extends BaseException {
     public readonly descriptionStatusCode: string;
 
     public constructor(source: string, statusCode: number, nameStatusCode: string, descriptionStatusCode: string) {
-        super(source,"NetworkException");
+        super(source);
         this.statusCode = statusCode;
         this.nameStatusCode = nameStatusCode;
         this.descriptionStatusCode = descriptionStatusCode;
-        this.initException();
+        this.initToConstructor();
     }
 
     public static fromSourceAndStatusCode(source: string, statusCode: number): NetworkException {
@@ -459,14 +445,6 @@ export class Result {
     }
 }
 
-export function debugPrint(text: string): void {
-    console.log(text);
-}
-
-export function debugPrintException(text: string): void {
-    debugPrint("\x1B[31m" + text +"\x1b[0m");
-}
-
-export function debugPrintMethod(methodName: string): void {
-    debugPrint("\x1B[36m[Method] " + methodName +"\x1b[0m");
+export function redPrint(text: string): void {
+    console.log("\x1B[31m" + text +"\x1b[0m");
 }

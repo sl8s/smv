@@ -16,11 +16,6 @@ class Product extends BaseModel {
     public override toMap(): Record<string, any> {
         return {"id": this.id, "price": this.price };
     }
-
-    public override toString(): string {
-        return "Product(id: " + this.id + ", " + 
-            "price: " + this.price + ")";
-    }
 }
 
 class ArrayProduct<T extends Product> extends BaseArrayModel<T> {
@@ -42,14 +37,6 @@ class ArrayProduct<T extends Product> extends BaseArrayModel<T> {
             arrayMap.push(itemModel.toMap());
         }
         return arrayMap; 
-    }
-
-    public override toString(): string {
-        let str = "\n";
-        for(const itemModel of this.arrayModel) {
-            str += itemModel.toString() + ",\n";
-        }
-        return "ArrayProduct(arrayModel: [" + str + "])";
     }
 }
 
@@ -94,13 +81,6 @@ describe("BaseArrayModel", () => {
                 arrayMapFromArrayProduct[8]["price"],
                 arrayMapFromArrayProduct[9]["price"],
             ]).toEqual([100, 101, 102, 103, 104, 105, 106, 107, 108, 109]);
-    });
-    test("toString()", () => {
-        const generatedArrayProduct: Array<Product> = Array.from(
-            { length: 1 },
-            (_, index: number) => new Product("id"+index, (100 + index)));
-        const arrayProduct = new ArrayProduct(generatedArrayProduct);
-        expect(arrayProduct.toString()).toEqual("ArrayProduct(arrayModel: [\nProduct(id: id0, price: 100),\n])");
     });
     test("add(newModel: T)", () => {
         const generatedArrayProduct: Array<Product> = Array.from(
@@ -204,10 +184,6 @@ describe("BaseModel", () => {
     test("toMap()", () => {
         const product = new Product("id1",100);
         expect(product.toMap()).toEqual({"id": "id1", "price": 100});
-    });
-    test("toString()", () => {
-        const product = new Product("id1",100);
-        expect(product.toString()).toEqual("Product(id: id1, price: 100)");
     });
 });
 

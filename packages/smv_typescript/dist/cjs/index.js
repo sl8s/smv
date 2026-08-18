@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Result = exports.ResultModel = exports.ResultArrayModel = exports.NetworkException = exports.LocalException = exports.ExceptionAdapter = exports.EnumGuilty = exports.BaseException = exports.ShareService = exports.ShareProxy = exports.IterationService = exports.BaseModel = exports.BaseModelRepository = exports.BaseArrayModel = void 0;
-exports.debugPrint = debugPrint;
-exports.debugPrintException = debugPrintException;
-exports.debugPrintMethod = debugPrintMethod;
+exports.redPrint = redPrint;
 const uuid_1 = require("uuid");
 class BaseArrayModel {
     arrayModel;
@@ -191,25 +189,16 @@ class ShareService {
     }
 }
 exports.ShareService = ShareService;
-class BaseException extends Error {
+class BaseException {
     source;
-    type;
-    constructor(source, type) {
-        super();
+    constructor(source) {
         this.source = source;
-        this.type = type;
-        this.name = this.constructor.name;
     }
-    initException() {
-        this.message = this.toString();
-        this.debugPrintException();
-    }
-    debugPrintException() {
-        debugPrintException("\n===start_to_trace_exception===\n");
-        debugPrintException("Source: " + this.source);
-        debugPrintException("Type: " + this.type);
-        debugPrintException("toString(): " + this.toString());
-        debugPrintException("\n===end_to_trace_exception===\n");
+    initToConstructor() {
+        redPrint("\n");
+        redPrint("Source: " + this.source);
+        redPrint("toString(): " + this.toString());
+        redPrint("\n");
     }
 }
 exports.BaseException = BaseException;
@@ -231,16 +220,16 @@ class ExceptionAdapter {
 exports.ExceptionAdapter = ExceptionAdapter;
 class LocalException extends BaseException {
     guilty;
-    extraMessage;
-    constructor(source, guilty, extraMessage) {
-        super(source, "LocalException");
+    message;
+    constructor(source, guilty, message) {
+        super(source);
         this.guilty = guilty;
-        this.extraMessage = extraMessage;
-        this.initException();
+        this.message = message;
+        this.initToConstructor();
     }
     toString() {
         return "LocalException(guilty: " + this.guilty + ", " +
-            "extraMessage: " + this.extraMessage + ")";
+            "message: " + this.message + ")";
     }
 }
 exports.LocalException = LocalException;
@@ -249,11 +238,11 @@ class NetworkException extends BaseException {
     nameStatusCode;
     descriptionStatusCode;
     constructor(source, statusCode, nameStatusCode, descriptionStatusCode) {
-        super(source, "NetworkException");
+        super(source);
         this.statusCode = statusCode;
         this.nameStatusCode = nameStatusCode;
         this.descriptionStatusCode = descriptionStatusCode;
-        this.initException();
+        this.initToConstructor();
     }
     static fromSourceAndStatusCode(source, statusCode) {
         switch (statusCode) {
@@ -383,12 +372,6 @@ class Result {
     }
 }
 exports.Result = Result;
-function debugPrint(text) {
-    console.log(text);
-}
-function debugPrintException(text) {
-    debugPrint("\x1B[31m" + text + "\x1b[0m");
-}
-function debugPrintMethod(methodName) {
-    debugPrint("\x1B[36m[Method] " + methodName + "\x1b[0m");
+function redPrint(text) {
+    console.log("\x1B[31m" + text + "\x1b[0m");
 }

@@ -2,13 +2,13 @@
 
 ## Install
 
-- [JavaScript/TypeScript](#javascripttypescript)
+- [Javascript/Typescript](#javascripttypescript)
 - [Dart](#dart)
 
-### JavaScript/TypeScript
+### Javascript/Typescript
 
 ```json
-"smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.3/smv_typescript_v2_0_3.tgz"
+"smv_typescript": "https://github.com/sl8s/smv/releases/download/v2.0.7/smv_typescript_v2_0_4.tgz"
 ```
 
 ### Dart
@@ -17,6 +17,6 @@
 smv_dart:
   git:
     url: https://github.com/sl8s/smv.git
-    ref: v2.0.1
+    ref: v2.0.2
     path: packages/smv_dart
 ```

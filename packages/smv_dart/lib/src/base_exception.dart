@@ -5,7 +5,7 @@ import 'package:smv_dart/src/utility.dart';
 abstract base class BaseException {
   final String _source;
   
-  const BaseException({required this._source});
+  const BaseException(this._source);
 
   @override
   String toString();

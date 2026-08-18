@@ -7,7 +7,7 @@ final class LocalException extends BaseException {
   final EnumGuilty guilty;
   final String message;
 
-  LocalException({required super._source, required this.guilty, required this.message}) {
+  LocalException({required String source, required this.guilty, required this.message}) : super(source) {
     this.initToConstructor();
   }
 

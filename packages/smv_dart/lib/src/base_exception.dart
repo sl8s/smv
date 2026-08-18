@@ -3,9 +3,9 @@ import 'package:smv_dart/src/utility.dart';
 
 @immutable
 abstract base class BaseException {
-  final String source;
+  final String _source;
   
-  const BaseException({required this.source});
+  const BaseException({required this._source});
 
   @override
   String toString();
@@ -14,7 +14,7 @@ abstract base class BaseException {
   @nonVirtual
   void initToConstructor() {
 	redPrint("\n");
-    redPrint("Source: ${this.source}");
+    redPrint("Source: ${this._source}");
     redPrint("toString(): ${this.toString()}");
     redPrint("\n");
   }

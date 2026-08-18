@@ -11,9 +11,6 @@ abstract base class BaseListModel<T extends BaseModel> {
 
   List<Map<String, dynamic>> toListMap();
 
-  @override
-  String toString();
-
   @nonVirtual
   void add(T newModel) {
     listModel.add(newModel);

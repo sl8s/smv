@@ -18,12 +18,6 @@ base class Product extends BaseModel {
   Map<String, dynamic> toMap() {
     return {"id": id, "price": price};
   }
-
-  @override
-  String toString() {
-    return "Product(id: $id, "
-        "price: $price)";
-  }
 }
 
 @immutable
@@ -46,15 +40,6 @@ base class ListProduct<T extends Product> extends BaseListModel<T> {
       listMap.add(itemModel.toMap());
     }
     return listMap;
-  }
-
-  @override
-  String toString() {
-    String str = "\n";
-    for (final T itemModel in listModel) {
-      str += "$itemModel,\n";
-    }
-    return "ListProduct(listModel: [$str])";
   }
 }
 
@@ -98,16 +83,6 @@ void main() {
                 listMapFromListProduct[8]["price"],
                 listMapFromListProduct[9]["price"]
               ], equals([100, 101, 102, 103, 104, 105, 106, 107, 108, 109]));
-            });
-            test("toString()", () {
-              final generatedListProduct = List<Product>.generate(1,
-                  (int index) => Product(id: "id$index", price: (100 + index)),
-                  growable: true);
-              final listProduct = ListProduct(listModel: generatedListProduct);
-              expect(
-                  listProduct.toString(),
-                  equals(
-                      "ListProduct(listModel: [\nProduct(id: id0, price: 100),\n])"));
             });
             test("add(T newModel)", () {
               final generatedListProduct = List<Product>.generate(10,

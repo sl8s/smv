@@ -2,16 +2,20 @@ import 'package:meta/meta.dart';
 import 'package:smv_dart/src/utility.dart';
 
 @immutable
-abstract base class BaseException implements Exception {
-  BaseException(
-      {required Object source, required Type type}) {
-    debugPrintException("\n===start_to_trace_exception===\n");
-    debugPrintException("Source: ${source.runtimeType}");
-    debugPrintException("Type: $type");
-    debugPrintException("toString(): ${toString()}");
-    debugPrintException("\n===end_to_trace_exception===\n");
-  }
+abstract base class BaseException {
+  final String source;
+  
+  const BaseException({required this.source});
 
   @override
   String toString();
+  
+  @protected
+  @nonVirtual
+  void initToConstructor() {
+	redPrint("\n");
+    redPrint("Source: ${this.source}");
+    redPrint("toString(): ${this.toString()}");
+    redPrint("\n");
+  }
 }

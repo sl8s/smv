@@ -9,7 +9,4 @@ abstract base class BaseModel {
   BaseModel clone();
 
   Map<String, dynamic> toMap();
-
-  @override
-  String toString();
 }

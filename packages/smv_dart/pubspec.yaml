@@ -1,5 +1,5 @@
 name: smv_dart
-version: 2.0.1
+version: 2.0.2
 
 environment:
   sdk: ">=3.0.0"

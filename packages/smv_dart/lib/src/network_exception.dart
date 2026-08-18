@@ -7,15 +7,12 @@ final class NetworkException extends BaseException {
   final String nameStatusCode;
   final String descriptionStatusCode;
 
-  NetworkException(
-      {required super.source,
-      required this.statusCode,
-      required this.nameStatusCode,
-      required this.descriptionStatusCode})
-      : super(type: NetworkException);
+  NetworkException({required super.source, required this.statusCode, required this.nameStatusCode, required this.descriptionStatusCode}) {
+	this.initToConstructor();
+  }
 
   factory NetworkException.fromSourceAndStatusCode(
-      {required Object source, required int statusCode}) {
+      {required String source, required int statusCode}) {
     switch (statusCode) {
       case 201:
         return NetworkException(

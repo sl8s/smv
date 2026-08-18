@@ -37,7 +37,7 @@ final class ShareService {
     }
     if ((_listenersByKey[key] ?? {}).containsKey(listenerId)) {
       throw LocalException(
-          source: this,
+          source: "ShareService",
           guilty: EnumGuilty.developer,
           message:
               "Under such a key and listenerId there already exists a listener: $key--$listenerId");

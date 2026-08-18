@@ -15,11 +15,6 @@ base class User extends BaseModel {
   Map<String, dynamic> toMap() {
     return {"id": id};
   }
-
-  @override
-  String toString() {
-    return "User(id: $id)";
-  }
 }
 
 void main() {
@@ -34,10 +29,6 @@ void main() {
             test("toMap()", () {
               final user = User(id: "id1");
               expect(user.toMap(), equals({"id": "id1"}));
-            });
-            test("toString()", () {
-              final user = User(id: "id1");
-              expect(user.toString(), equals("User(id: id1)"));
             });
           });
 }

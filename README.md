@@ -17,6 +17,6 @@
 smv_dart:
   git:
     url: https://github.com/sl8s/smv.git
-    ref: v2.0.2
+    ref: v2.0.7
     path: packages/smv_dart
 ```

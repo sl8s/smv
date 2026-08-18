@@ -7,7 +7,7 @@ final class NetworkException extends BaseException {
   final String nameStatusCode;
   final String descriptionStatusCode;
 
-  NetworkException({required super.source, required this.statusCode, required this.nameStatusCode, required this.descriptionStatusCode}) {
+  NetworkException({required super._source, required this.statusCode, required this.nameStatusCode, required this.descriptionStatusCode}) {
 	this.initToConstructor();
   }
 

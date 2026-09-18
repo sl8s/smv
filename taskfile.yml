@@ -1,9 +1,34 @@
 version: "3"
 
 env:
+  smvgo_directory: ./packages/smvgo
   smv_dart_directory: ./packages/smv_dart
   smv_typescript_directory: ./packages/smv_typescript
 tasks:
+  go:download:
+    dir: "{{.smvgo_directory}}"
+    cmds:
+      - go mod download
+  go:test:
+    dir: "{{.smvgo_directory}}"
+    cmds:
+      - go test -v -race -cover ./...
+  go:check:
+    dir: "{{.smvgo_directory}}"
+    cmds:
+      - go mod tidy -diff
+      - go mod verify
+      - go fix -diff ./...
+      - go fmt -n ./...
+      - go vet ./...
+  go:adjust:
+    dir: "{{.smvgo_directory}}"
+    cmds:
+      - go mod tidy
+      - go mod verify
+      - go fix ./...
+      - go fmt ./...
+      - go vet ./...
   flutter:clean:
     dir: "{{.smv_dart_directory}}"
     cmds:

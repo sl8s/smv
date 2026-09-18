@@ -1,11 +1,13 @@
-name: packages-smv_typescript-running_unit_tests.yml
+name: packages_smv_typescript_running_unit_tests
 run-name: ${{ github.actor }}
 on:
   push:
+    paths:
+        - "packages/smv_typescript/**"
   workflow_dispatch:
 env:
   node_version: 24.7.0
-  working_directory: packages/smv_typescript
+  task_version: 3.45.4
 jobs:
   task:
     runs-on: ubuntu-latest
@@ -14,7 +16,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: ${{ env.node_version }}
-      - run: npm run download
-        working-directory: ${{ env.working_directory }}
-      - run: npm run test
-        working-directory: ${{ env.working_directory }}
+      - uses: go-task/setup-task@v2
+        with:
+          version: ${{ env.task_version }}
+      - run: task npm:download
+      - run: task npm:test

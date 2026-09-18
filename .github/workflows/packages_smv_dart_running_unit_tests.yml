@@ -1,11 +1,13 @@
-name: packages-smv_dart-running_unit_tests
+name: packages_smv_dart_running_unit_tests
 run-name: ${{ github.actor }}
 on:
   push:
+    paths:
+        - "packages/smv_dart/**"
   workflow_dispatch:
 env:
   flutter_channel: stable
-  working_directory: packages/smv_dart
+  task_version: 3.45.4
 jobs:
   task:
     runs-on: ubuntu-latest
@@ -14,7 +16,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: ${{ env.flutter_channel }}
-      - run: flutter pub get
-        working-directory: ${{ env.working_directory }}
-      - run: flutter test
-        working-directory: ${{ env.working_directory }}
+      - uses: go-task/setup-task@v2
+        with:
+          version: ${{ env.task_version }}
+      - run: task flutter:download
+      - run: task flutter:test

@@ -20,7 +20,7 @@ go get github.com/sl8s/smv/packages/smvgo/v2@v2.0.9
 
 > Important
 >
-> At this time, this library will not be supported.
+> At this time, this library on 'Javascript/Typescript' will not be supported.
 
 > Note
 >
@@ -60,7 +60,7 @@ smv_dart:
 
 > Important
 >
-> At this time, this library will not be supported.
+> At this time, this library on 'Dart' will not be supported.
 
 > Note
 >

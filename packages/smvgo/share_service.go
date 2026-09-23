@@ -41,12 +41,14 @@ func (ss *shareService) GetValue(key string, defaultValue any) any {
 func (ss *shareService) AddListener(key string, listenerId string, callback func(event any)) error {
 	ss.mutex.Lock()
 	defer ss.mutex.Unlock()
-	if _, existsListeners := ss.listenersMap[key]; !existsListeners {
+	listeners, existsListeners := ss.listenersMap[key]
+	if !existsListeners {
 		ss.listenersMap[key] = make(map[string]func(event any))
 		ss.listenersMap[key][listenerId] = callback
 		return nil
 	}
-	if _, existsListener := ss.listenersMap[key][listenerId]; existsListener {
+	_, existsListener := listeners[listenerId]
+	if existsListener {
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
@@ -78,9 +80,9 @@ func (ss *shareService) DeleteListener(key string, listenerId string) error {
 
 func (ss *shareService) NotifyListener(key string, listenerId string, value any) error {
 	ss.mutex.Lock()
+	defer ss.mutex.Unlock()
 	listeners, existsListeners := ss.listenersMap[key]
 	if !existsListeners {
-		ss.mutex.Unlock()
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
@@ -89,36 +91,29 @@ func (ss *shareService) NotifyListener(key string, listenerId string, value any)
 	}
 	listener, existsListener := listeners[listenerId]
 	if !existsListener {
-		ss.mutex.Unlock()
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
 			fmt.Sprintf("No exists key and listenerId to notify listeners: %s -- %s", key, listenerId),
 		)
 	}
-	ss.mutex.Unlock()
 	listener(value)
 	return nil
 }
 
 func (ss *shareService) NotifyListeners(key string, value any) error {
 	ss.mutex.Lock()
+	defer ss.mutex.Unlock()
 	listeners, existsListeners := ss.listenersMap[key]
 	if !existsListeners {
-		ss.mutex.Unlock()
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
 			fmt.Sprintf("No exists key to notify listeners: %s", key),
 		)
 	}
-	snapshots := make([]func(event any), 0, len(listeners))
 	for _, listener := range listeners {
-		snapshots = append(snapshots, listener)
-	}
-	ss.mutex.Unlock()
-	for _, snapshot := range snapshots {
-		snapshot(value)
+		listener(value)
 	}
 	return nil
 }

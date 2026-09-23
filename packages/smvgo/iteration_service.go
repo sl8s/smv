@@ -11,7 +11,7 @@ type IterationService interface {
 }
 
 type iterationService struct {
-	mutex      sync.RWMutex
+	mutex      sync.Mutex
 	structsMap map[string]struct{}
 }
 

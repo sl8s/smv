@@ -18,7 +18,7 @@ type ShareService interface {
 }
 
 type shareService struct {
-	mutex        sync.RWMutex
+	mutex        sync.Mutex
 	anysMap      map[string]any
 	listenersMap map[string]map[string]func(event any)
 }
@@ -29,8 +29,8 @@ var instanceShareService = &shareService{
 }
 
 func (ss *shareService) GetValue(key string, defaultValue any) any {
-	ss.mutex.RLock()
-	defer ss.mutex.RUnlock()
+	ss.mutex.Lock()
+	defer ss.mutex.Unlock()
 	value, existsValue := ss.anysMap[key]
 	if !existsValue {
 		return defaultValue
@@ -77,10 +77,10 @@ func (ss *shareService) DeleteListener(key string, listenerId string) error {
 }
 
 func (ss *shareService) NotifyListener(key string, listenerId string, value any) error {
-	ss.mutex.RLock()
+	ss.mutex.Lock()
 	listeners, existsListeners := ss.listenersMap[key]
 	if !existsListeners {
-		ss.mutex.RUnlock()
+		ss.mutex.Unlock()
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
@@ -89,23 +89,23 @@ func (ss *shareService) NotifyListener(key string, listenerId string, value any)
 	}
 	listener, existsListener := listeners[listenerId]
 	if !existsListener {
-		ss.mutex.RUnlock()
+		ss.mutex.Unlock()
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
 			fmt.Sprintf("No exists key and listenerId to notify listeners: %s -- %s", key, listenerId),
 		)
 	}
-	ss.mutex.RUnlock()
+	ss.mutex.Unlock()
 	listener(value)
 	return nil
 }
 
 func (ss *shareService) NotifyListeners(key string, value any) error {
-	ss.mutex.RLock()
+	ss.mutex.Lock()
 	listeners, existsListeners := ss.listenersMap[key]
 	if !existsListeners {
-		ss.mutex.RUnlock()
+		ss.mutex.Unlock()
 		return NewLocalError(
 			"ShareService",
 			DeveloperByEnumGuilty(),
@@ -116,7 +116,7 @@ func (ss *shareService) NotifyListeners(key string, value any) error {
 	for _, listener := range listeners {
 		snapshots = append(snapshots, listener)
 	}
-	ss.mutex.RUnlock()
+	ss.mutex.Unlock()
 	for _, snapshot := range snapshots {
 		snapshot(value)
 	}

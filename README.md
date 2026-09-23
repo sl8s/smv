@@ -9,7 +9,7 @@
 ### Go
 
 ```sh
-go get github.com/sl8s/smv/packages/smvgo/v2@v2.0.9
+go get github.com/sl8s/smv/packages/smvgo/v2@v2.1.0
 ```
 
 ### Javascript/Typescript
